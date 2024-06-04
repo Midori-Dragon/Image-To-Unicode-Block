@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Image-To-Unicode-Block</title>
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" />
+    <script type="module" src="scripts/appState.js"></script>
+    <script type="module" src="scripts/imageConverter.js"></script>
+    <script type="module" src="scripts/unicodeConverter.js"></script>
+    <script type="module" src="scripts/main.js"></script>
+</head>
+
+<body onmouseup="handleMouseUp(event)">
+    <div id="unicode-result-container">
+        <div id="unicode-result" class="frame" onmousewheel="handleImageMouseZoom(event)"
+            onmousedown="handleImageMouseDown(event)" onmousemove="handleImageMouseMove(event)"
+            onclick="handleImageClick(event)">
+            Converted Image will be displayed here
+        </div>
+    </div>
+    <br>
+    <input type="file" id="imageUpload" class="full-width clickable" accept="image/*"
+        onchange="handleImageUpload(event)" />
+    <br>
+    <br>
+    <div class="form-row">
+        <div class="form-group">
+            <label style="margin-bottom: 2px;">Template String for conversion</label>
+            <input type="text" id="template-string" title="Template String for the conversion.
+${color} will be replaced with the color value.
+${text} with the unicode symbol" value="[color=${color}]${text}[/color]" placeholder="[color=${color}]${text}[/color]"
+                style="width: 400px;" />
+        </div>
+        <div class="form-group">
+            <label style="margin-bottom: 2px;">Conversion Chars</label>
+            <div style="width: 140px;">
+                <input type="text" id="conversion-char-full" title="Char to use for the conversion" value="█"
+                    placeholder="█" style="width: 48px; text-align: center;"
+                    oninput="handleChangeFullCharChange(event)" />
+                <input type="text" id="conversion-char-trans" title="Empty Char to use for spaces in the conversion"
+                    value="⠀" placeholder="⠀" style="width: 48px; text-align: center;"
+                    oninput="handleChangeEmptyCharChange(event)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label style="margin-bottom: 6px;">Copy Unicode Result</label>
+            <button id="copy-unicode" class="clickable full-width" title="Copies the unicode result to the clipboard"
+                style="width: 200px;" onclick="handleCopyButtonClick(event)">Copy to Clipboard</button>
+        </div>
+        <div class="form-group">
+            <div style="margin-top: 40px;">
+                <input type="checkbox" id="show-link" class="clickable" checked oninput="handleShowLinkChange(event)" />
+                <label class="clickable full-width" for="show-link"
+                    title="Wether to include the website link: 'pixels from...'">Include
+                    Website Link</label>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
