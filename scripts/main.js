@@ -12,7 +12,7 @@ function updateDisplay() {
 }
 
 window.handleCopyButtonClick = (event) => {
-    const convertedText = convertUnicode(appState.elements.unicodeResultElem);
+    const convertedText = convertUnicode(appState.elements.unicodeResultElem, appState.elements.templateStringElem);
     navigator.clipboard.writeText(convertedText);
 };
 

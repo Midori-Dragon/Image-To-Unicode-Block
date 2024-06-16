@@ -1,4 +1,4 @@
-export function convertUnicode(container) {
+export function convertUnicode(container, templateStringElem) {
     let templateString = templateStringElem.value;
     if (templateString === '')
         templateString = '[color=${color}]${text}[/color]';
