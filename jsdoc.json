@@ -1,0 +1,25 @@
+{
+    "source": {
+        "include": [
+            "./scripts"
+        ],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+        "destination": "./docs",
+        "recurse": false,
+        "readme": "./README.md",
+        "template": "./node_modules/foodoc/template"
+    },
+    "templates": {
+        "systemName": "Image-To-Unicode-Block",
+        "systemSummary": "Convert any Image to Unicode Block symbol ('█')",
+        "inlineNav": true,
+        "systemColor": "#383838",
+        "footer": "<a href=\"https://midori-dragon.github.io/Image-To-Unicode-Block/\">Try here: Image-To-Unicode-Block</a>"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ]
+}
