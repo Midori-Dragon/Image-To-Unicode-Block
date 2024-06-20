@@ -14,7 +14,8 @@ class AppState {
             isMiddleMouseDown: false,
             lastX: 0,
             lastY: 0,
-            imageSelected: false
+            imageSelected: false,
+            transThreshold: 50
         };
         this.image = new Image();
         this.canvas = document.createElement('canvas');
@@ -42,7 +43,8 @@ class AppState {
                 'template-string': 'templateStringElem',
                 'show-link': 'showLinkElem',
                 'conversion-char-full': 'pixelCharFullElem',
-                'conversion-char-trans': 'pixelCharTransElem'
+                'conversion-char-trans': 'pixelCharTransElem',
+                'trans-slider': 'transSliderElem',
             };
             Object.keys(elementMapping).forEach(id => {
                 const propName = elementMapping[id];
@@ -53,6 +55,8 @@ class AppState {
 
             this.state.fullChar = this.elements.pixelCharFullElem.value;
             this.state.transChar = this.elements.pixelCharTransElem.value;
+
+            this.elements.transSliderElem.value = this.state.transThreshold;
         });
     }
 

@@ -15,6 +15,7 @@ export class ImageConverter {
         });
         appState.onPropertyChange('fullChar', () => this.convert());
         appState.onPropertyChange('transChar', () => this.convert());
+        appState.onPropertyChange('transThreshold', () => this.convert());
         appState.onloadImage(() => appState.state.zoomFactor = appState.state.zoomFactor);
 
         this._blockWidth;
@@ -59,7 +60,7 @@ export class ImageConverter {
      * Updates the canvas width and height, and draws the image on the canvas.
      * Also updates the internal image data.
      */
-     adjustCanvasSize() {
+    adjustCanvasSize() {
         appState.canvas.width = Math.round(appState.image.width / appState.state.zoomFactor);
         appState.canvas.height = Math.round(appState.image.height / appState.state.zoomFactor);
         appState.ctx.drawImage(appState.image, 0, 0, appState.canvas.width, appState.canvas.height);
@@ -95,8 +96,8 @@ export class ImageConverter {
      * @param {number} y - The y-coordinate of the line.
      * @param {number} blockWidth - The width of each block in pixels.
      * @param {number} blockHeight - The height of each block in pixels.
-     * @param {string} fullChar - The character to use for blocks with opacity greater than 50%.
-     * @param {string} transChar - The character to use for blocks with opacity less than or equal to 50%.
+     * @param {string} fullChar - The character to use for normal blocks.
+     * @param {string} transChar - The character to use for transparent blocks.
      * @returns {string} - The HTML line representing the image.
      */
     processLine(canvas, imageData, y, blockWidth, blockHeight, fullChar, transChar) {
@@ -106,7 +107,7 @@ export class ImageConverter {
         for (let x = 0; x < canvas.width; x += blockWidth) {
             const actualBlockWidth = (x + blockWidth > canvas.width) ? canvas.width - x : blockWidth;
             const avgColor = this.calculateBlockAverageColor(canvas, imageData, x, y, actualBlockWidth, blockHeight);
-            const char = avgColor.a <= 50 ? transChar : fullChar;
+            const char = avgColor.a <= appState.state.transThreshold ? transChar : fullChar;
             if (lastColor === `${avgColor.r}${avgColor.g}${avgColor.b}`) {
                 lineResult += char;
             } else {
@@ -154,7 +155,7 @@ export class ImageConverter {
      * @param {number} pixelCount - The number of pixels used to calculate the color.
      * @returns {Object<r, g, b, a>} - The object containing the calculated RGBA values of the average color.
      */
-     calculateAverageColor(data, pixelCount) {
+    calculateAverageColor(data, pixelCount) {
         return {
             r: Math.round(data.r / pixelCount),
             g: Math.round(data.g / pixelCount),

@@ -40,6 +40,9 @@ window.handleImageMouseZoom = (event) => {
 
     event.preventDefault();
 
+    if (appState.state.imageSelected === false)
+        return;
+
     if (event.deltaY < 0)
         appState.state.zoomFactor -= appState.constants.ZOOM_FACTOR_CHANGE;
     else
@@ -96,4 +99,8 @@ window.handleChangeEmptyCharChange = (event) => {
     appState.state.transChar = event.target.value;
     if (appState.state.transChar === '')
         appState.state.transChar = appState.elements.pixelCharTransElem.placeholder;
+};
+
+window.handleTransSliderChange = (event) => {
+    appState.state.transThreshold = event.target.value;
 };
